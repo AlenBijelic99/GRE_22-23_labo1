@@ -2,6 +2,8 @@ package gre.lab1.groupeX;
 
 import gre.lab1.graph.GridGraph2D;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 // TODO: javadoc
@@ -11,6 +13,9 @@ public final class GridGraph implements GridGraph2D {
 
   /** Hauteur de la grille. */
   private final int height;
+
+
+  private LinkedList<Integer>[] adjVerticesList;
 
   /**
    * Construit une grille carrée.
@@ -32,12 +37,21 @@ public final class GridGraph implements GridGraph2D {
 
     this.width = width;
     this.height = height;
+
+    adjVerticesList = new LinkedList[width];
   }
 
   @Override
   public List<Integer> neighbors(int v) {
-    // TODO: A implémenter
-    return null;
+    if (v < 0 || v >= height * width) {
+      throw new IndexOutOfBoundsException("L'index v n'éxiste pas.");
+    }
+    List<Integer> neightborsValues = new ArrayList<>();
+    if (v >= width) neightborsValues.add(v - width); // Check for upper neighbor
+    if (v < width * (height - 1)) neightborsValues.add(v + width); // Check for under neighbor
+    if (v % height != 0) neightborsValues.add(v - 1); // Check for left hand sign neighbor
+    if (v % height != height - 1) neightborsValues.add(v + 1); // Check for right hand sign neighbor
+    return neightborsValues;
   }
 
   @Override
