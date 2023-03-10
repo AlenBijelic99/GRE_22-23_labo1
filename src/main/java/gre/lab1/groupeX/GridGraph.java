@@ -56,13 +56,26 @@ public final class GridGraph implements GridGraph2D {
 
   @Override
   public boolean areAdjacent(int u, int v) {
-    // TODO: A implémenter
-    return false;
+    if (vertexExists(u) && vertexExists(v)) {
+      throw new IndexOutOfBoundsException("u or v doesn't exist.");
+    }
+    // Adjacent if v is next, above or below to u.
+    return (u == v - 1 || u == v + 1 || u == v - width || u == v + width);
   }
 
   @Override
   public void addEdge(int u, int v) {
-    // TODO: A implémenter
+    if (vertexExists(u) && vertexExists(v)) {
+      throw new IndexOutOfBoundsException("u or v doesn't exist.");
+    }
+
+    if (!areAdjacent(u, v)){
+      throw new IllegalArgumentException("u and v aren't adjacent.");
+    }
+
+
+    //adjVerticesList.get(u).add(v);
+
   }
 
   @Override
@@ -72,14 +85,12 @@ public final class GridGraph implements GridGraph2D {
 
   @Override
   public int nbVertices() {
-    // TODO: A implémenter
-    return 0;
+    return height * width;
   }
 
   @Override
   public boolean vertexExists(int v) {
-    // TODO: A implémenter
-    return false;
+    return (v < 0 || v >= height * width);
   }
 
   @Override
