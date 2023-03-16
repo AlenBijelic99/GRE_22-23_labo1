@@ -1,4 +1,4 @@
-package gre.lab1.groupeX;
+package gre.lab1.groupe10;
 
 import gre.lab1.graph.GridGraph2D;
 

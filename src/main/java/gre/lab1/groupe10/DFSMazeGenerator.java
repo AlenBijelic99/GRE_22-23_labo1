@@ -1,5 +1,5 @@
 // TODO: refactor le nom du package groupeX avec le bon numéro de groupe (SHIFT + F6)
-package gre.lab1.groupeX;
+package gre.lab1.groupe10;
 
 import gre.lab1.gui.MazeGenerator;
 import gre.lab1.gui.MazeBuilder;
