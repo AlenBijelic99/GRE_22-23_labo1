@@ -15,7 +15,7 @@ public final class GridGraph implements GridGraph2D {
   private final int height;
 
 
-  private LinkedList<Integer>[] adjVerticesList;
+  private final ArrayList<LinkedList<Integer>> adjVerticesList;
 
   /**
    * Construit une grille carrée.
@@ -38,7 +38,10 @@ public final class GridGraph implements GridGraph2D {
     this.width = width;
     this.height = height;
 
-    adjVerticesList = new LinkedList[width];
+    adjVerticesList = new ArrayList<>(width * height);
+    for (int i = 0; i < width * height; ++i) {
+      adjVerticesList.add(new LinkedList<>());
+    }
   }
 
   @Override
@@ -54,38 +57,58 @@ public final class GridGraph implements GridGraph2D {
     return neightborsValues;
   }
 
-  @Override
-  public boolean areAdjacent(int u, int v) {
+  private void isInBound(int u, int v){
     if (vertexExists(u) && vertexExists(v)) {
       throw new IndexOutOfBoundsException("u or v doesn't exist.");
     }
+  }
+
+  @Override
+  public boolean areAdjacent(int u, int v) {
+    isInBound(u, v);
+
     // Adjacent if v is next, above or below to u.
     return (u == v - 1 || u == v + 1 || u == v - width || u == v + width);
   }
 
   @Override
   public void addEdge(int u, int v) {
-    if (vertexExists(u) && vertexExists(v)) {
-      throw new IndexOutOfBoundsException("u or v doesn't exist.");
-    }
+    isInBound(u, v);
 
     if (!areAdjacent(u, v)){
       throw new IllegalArgumentException("u and v aren't adjacent.");
     }
 
+    // TODO: Actuellement ajout simplement la valeur dans la linked list. Il faudra peut être garantir qu'il n'y a qu'une seule valeur possible ou que les valeurs sont dans un ordre croissant.
 
-    //adjVerticesList.get(u).add(v);
-
+    if (!adjVerticesList.get(u).contains(v)) {
+      adjVerticesList.get(u).add(v);
+    }
+    if (!adjVerticesList.get(v).contains(u)) {
+      adjVerticesList.get(v).add(u);
+    }
   }
 
   @Override
   public void removeEdge(int u, int v) {
-    // TODO: A implémenter
+    isInBound(u, v);
+
+    if (!areAdjacent(u, v)){
+      throw new IllegalArgumentException("u and v aren't adjacent.");
+    }
+
+    adjVerticesList.get(u).removeFirstOccurrence(v);
+    adjVerticesList.get(v).removeFirstOccurrence(u);
   }
 
   @Override
   public int nbVertices() {
-    return height * width;
+    int nb = 0;
+    for (int i = 0; i < width * height; ++i) {
+      nb += adjVerticesList.get(i).size();
+    }
+
+    return nb;
   }
 
   @Override
@@ -108,6 +131,12 @@ public final class GridGraph implements GridGraph2D {
    * @param graph Un graphe.
    */
   public static void bindAll(GridGraph graph) {
-    // TODO: A implémenter
+    for (int i = 0; i < graph.width * graph.height; ++i){
+      for (int j = 0; j < graph.width * graph.height; ++j){
+        if (graph.areAdjacent(i, j)) {
+          graph.addEdge(i, j);
+        }
+      }
+    }
   }
 }
