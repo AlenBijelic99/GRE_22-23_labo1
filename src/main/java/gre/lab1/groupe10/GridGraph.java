@@ -14,7 +14,6 @@ public final class GridGraph implements GridGraph2D {
   /** Hauteur de la grille. */
   private final int height;
 
-
   private final ArrayList<LinkedList<Integer>> adjVerticesList;
 
   /**
@@ -133,8 +132,9 @@ public final class GridGraph implements GridGraph2D {
   public static void bindAll(GridGraph graph) {
     for (int i = 0; i < graph.width * graph.height; ++i){
       List<Integer> neighbors = graph.neighbors(i);
-      int finalI = i;
-      neighbors.forEach((neighbor) -> graph.addEdge(finalI, neighbor));
+      for (Integer neighbor : neighbors) {
+        graph.addEdge(i, neighbor);
+      }
     }
   }
 }
