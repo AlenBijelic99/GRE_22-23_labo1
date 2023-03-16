@@ -67,16 +67,17 @@ public final class GridGraph implements GridGraph2D {
     isInBound(u, v);
 
     // Adjacent if v is next, above or below to u.
-    return (u == v - 1 || u == v + 1 || u == v - width || u == v + width);
+    //return (u == v - 1 || u == v + 1 || u == v - width || u == v + width);
+    return adjVerticesList.get(u).contains(v) || adjVerticesList.get(v).contains(u);
   }
 
   @Override
   public void addEdge(int u, int v) {
     isInBound(u, v);
 
-    if (!areAdjacent(u, v)){
+    /*if (!areAdjacent(u, v)){
       throw new IllegalArgumentException("u and v aren't adjacent.");
-    }
+    }*/
 
     // TODO: Actuellement ajout simplement la valeur dans la linked list. Il faudra peut être garantir qu'il n'y a qu'une seule valeur possible ou que les valeurs sont dans un ordre croissant.
 
@@ -102,12 +103,7 @@ public final class GridGraph implements GridGraph2D {
 
   @Override
   public int nbVertices() {
-    int nb = 0;
-    for (int i = 0; i < width * height; ++i) {
-      nb += adjVerticesList.get(i).size();
-    }
-
-    return nb;
+    return width * height;
   }
 
   @Override
@@ -130,6 +126,7 @@ public final class GridGraph implements GridGraph2D {
    * @param graph Un graphe.
    */
   public static void bindAll(GridGraph graph) {
+    System.out.println(graph.height);
     for (int i = 0; i < graph.width * graph.height; ++i){
       List<Integer> neighbors = graph.neighbors(i);
       for (Integer neighbor : neighbors) {
