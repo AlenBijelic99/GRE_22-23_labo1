@@ -1,5 +1,6 @@
 package gre.lab1.groupe10;
 
+import gre.lab1.graph.Graph;
 import gre.lab1.gui.MazeGenerator;
 import gre.lab1.gui.MazeBuilder;
 import gre.lab1.gui.Progression;

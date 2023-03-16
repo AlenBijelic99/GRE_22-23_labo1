@@ -58,7 +58,7 @@ public final class GridGraph implements GridGraph2D {
   }
 
   private void isInBound(int u, int v){
-    if (vertexExists(u) && vertexExists(v)) {
+    if (!vertexExists(u) || !vertexExists(v)) {
       throw new IndexOutOfBoundsException("u or v doesn't exist.");
     }
   }
@@ -113,7 +113,7 @@ public final class GridGraph implements GridGraph2D {
 
   @Override
   public boolean vertexExists(int v) {
-    return (v < 0 || v >= height * width);
+    return (v >= 0 && v < height * width);
   }
 
   @Override
@@ -132,11 +132,9 @@ public final class GridGraph implements GridGraph2D {
    */
   public static void bindAll(GridGraph graph) {
     for (int i = 0; i < graph.width * graph.height; ++i){
-      for (int j = 0; j < graph.width * graph.height; ++j){
-        if (graph.areAdjacent(i, j)) {
-          graph.addEdge(i, j);
-        }
-      }
+      List<Integer> neighbors = graph.neighbors(i);
+      int finalI = i;
+      neighbors.forEach((neighbor) -> graph.addEdge(finalI, neighbor));
     }
   }
 }
