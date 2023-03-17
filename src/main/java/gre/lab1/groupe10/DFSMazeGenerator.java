@@ -37,19 +37,17 @@ public final class DFSMazeGenerator implements MazeGenerator {
     while (!stack.isEmpty()) {
       int current = stack.pop();
       label.setLabel(current, Progression.PROCESSING);
-      if (!visited[current]) {
-        visited[current] = true;
-        List<Integer> neighbors = graph.neighbors(current);
-        Collections.shuffle(neighbors);
-        for (int neighbor : neighbors) {
+      List<Integer> neighbors = graph.neighbors(current);
+      Collections.shuffle(neighbors);
+      for (int neighbor : neighbors) {
+        if (!visited[neighbor]) {
           stack.push(neighbor);
+          visited[neighbor] = true;
+        } else if (graph.areAdjacent(current, neighbor) && neighbor != lastVisited) {
+          builder.removeWall(current, neighbor);
         }
-      } else {
-        if (graph.areAdjacent(current, lastVisited)) {
-          builder.removeWall(current, lastVisited);
-        }
-        label.setLabel(current, Progression.PROCESSED);
       }
+      label.setLabel(current, Progression.PROCESSED);
       lastVisited = current;
     }
   }

@@ -68,7 +68,7 @@ public final class GridGraph implements GridGraph2D {
 
     // Adjacent if v is next, above or below to u.
     //return (u == v - 1 || u == v + 1 || u == v - width || u == v + width);
-    return adjVerticesList.get(u).contains(v) || adjVerticesList.get(v).contains(u);
+    return adjVerticesList.get(u).contains(v) && adjVerticesList.get(v).contains(u);
   }
 
   @Override
