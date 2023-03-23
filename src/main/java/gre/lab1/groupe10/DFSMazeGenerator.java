@@ -61,9 +61,11 @@ public final class DFSMazeGenerator implements MazeGenerator {
                     break;
                 }
             }
+            // Si tous les voisin d'un sommet ont été visités, on peut le marquer comme traité
             if (!hasNeighborToVisit) {
                 label.setLabel(current, Progression.PROCESSED);
                 lastVisited = stack.pop();
+                // Si ce n'est pas le dernier sommet de la pile on enlève le mur avec l'élément précédemment visité
                 if (!stack.empty()) {
                     builder.removeWall(stack.peek(), lastVisited);
                 }
