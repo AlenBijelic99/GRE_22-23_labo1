@@ -126,7 +126,6 @@ public final class GridGraph implements GridGraph2D {
    * @param graph Un graphe.
    */
   public static void bindAll(GridGraph graph) {
-    System.out.println(graph.height);
     for (int i = 0; i < graph.width * graph.height; ++i){
       List<Integer> neighbors = graph.neighbors(i);
       for (Integer neighbor : neighbors) {

@@ -47,27 +47,28 @@ public final class DFSMazeGenerator implements MazeGenerator {
 
             boolean hasNeighborToVisit = false;
             for (int neighbor : neighbors) {
-              // On traite le premier voisin non visité dans la liste.
-              if (!visited[neighbor]) {
-                visited[neighbor] = true;
+                // On traite le premier voisin non visité dans la liste.
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
 
-                // Supprimer le mur entre le sommet courant et le voisin
-                //builder.removeWall(current, neighbor);
+                    // Supprimer le mur entre le sommet courant et le voisin
+                    //builder.removeWall(current, neighbor);
 
-                // Ajouter le voisin à la pile et le marquer en traitement
-                stack.push(neighbor);
-                label.setLabel(neighbor, Progression.PROCESSING);
-                hasNeighborToVisit = true;
-                break;
-              }
+                    // Ajouter le voisin à la pile et le marquer en traitement
+                    stack.push(neighbor);
+                    label.setLabel(neighbor, Progression.PROCESSING);
+                    hasNeighborToVisit = true;
+                    break;
+                }
             }
             if (!hasNeighborToVisit) {
-                stack.pop();
-                if (graph.areAdjacent(current, lastVisited))
-                  builder.removeWall(current, lastVisited);
                 label.setLabel(current, Progression.PROCESSED);
+                lastVisited = stack.pop();
+                if (!stack.empty()) {
+                    current = stack.peek();
+                    builder.removeWall(current, lastVisited);
+                }
             }
-          lastVisited = current;
         }
     }
 }
