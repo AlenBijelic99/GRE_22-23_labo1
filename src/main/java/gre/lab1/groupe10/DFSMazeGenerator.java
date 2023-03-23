@@ -65,8 +65,7 @@ public final class DFSMazeGenerator implements MazeGenerator {
                 label.setLabel(current, Progression.PROCESSED);
                 lastVisited = stack.pop();
                 if (!stack.empty()) {
-                    current = stack.peek();
-                    builder.removeWall(current, lastVisited);
+                    builder.removeWall(stack.peek(), lastVisited);
                 }
             }
         }
