@@ -51,10 +51,11 @@ public final class GridGraph implements GridGraph2D {
    * Retourne les voisins d'un sommet
    * @param v Le sommet dont on veut les voisins
    * @return Liste d'entier représentant les voisins d'un sommet
+   * @throws IndexOutOfBoundsException Si les sommets n'existent pas dans le graphe
    */
   @Override
-  public List<Integer> neighbors(int v) {
-    if (v < 0 || v >= height * width) {
+  public List<Integer> neighbors(int v) throws IndexOutOfBoundsException {
+    if (!vertexExists(v)) {
       throw new IndexOutOfBoundsException("L'index v n'éxiste pas.");
     }
 
@@ -65,8 +66,9 @@ public final class GridGraph implements GridGraph2D {
    * Vérification que deux sommets sont dans le graphe
    * @param u Premier sommet à vérifier
    * @param v Deuxième sommet à vérifier
+   * @throws IndexOutOfBoundsException Si les sommets n'existent pas dans le graphe
    */
-  private void areInBound(int u, int v){
+  private void areInBound(int u, int v) throws IndexOutOfBoundsException {
     if (!vertexExists(u) || !vertexExists(v)) {
       throw new IndexOutOfBoundsException("u or v doesn't exist.");
     }
@@ -106,9 +108,10 @@ public final class GridGraph implements GridGraph2D {
    * Dissocie deux sommets d'une arête
    * @param u Une extrémité de l'arête.
    * @param v L'autre extrémité de l'arête.
+   * @throws IllegalArgumentException Si les sommets ne sont pas adjacents
    */
   @Override
-  public void removeEdge(int u, int v) {
+  public void removeEdge(int u, int v) throws IllegalArgumentException {
     areInBound(u, v);
 
     if (!areAdjacent(u, v)){
