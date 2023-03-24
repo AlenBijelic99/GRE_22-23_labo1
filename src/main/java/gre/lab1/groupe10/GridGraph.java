@@ -162,11 +162,12 @@ public final class GridGraph implements GridGraph2D {
    */
   public static void bindAll(GridGraph graph) {
     for (int i = 0; i < graph.width * graph.height; ++i){
+      // Lie chaque sommet avec tous ses voisins
       List<Integer> neightborsValues = new ArrayList<>();
-      if (i >= graph.width) neightborsValues.add(i - graph.width); // Check for upper neighbor
-      if (i < graph.width * (graph.height - 1)) neightborsValues.add(i + graph.width); // Check for under neighbor
-      if (i % graph.height != 0) neightborsValues.add(i - 1); // Check for left hand sign neighbor
-      if (i % graph.height != graph.height - 1) neightborsValues.add(i + 1); // Check for right hand sign neighbor
+      if (i >= graph.width) neightborsValues.add(i - graph.width); // Si le voisin du dessus existe
+      if (i < graph.width * (graph.height - 1)) neightborsValues.add(i + graph.width); // Si le voisin du dessous existe
+      if (i % graph.height != 0) neightborsValues.add(i - 1); // Si le voisin à gauche existe
+      if (i % graph.height != graph.height - 1) neightborsValues.add(i + 1); // Si le voisin à droite existe
       for (Integer neighbor : neightborsValues) {
         graph.addEdge(i, neighbor);
       }

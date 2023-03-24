@@ -45,6 +45,7 @@ public final class DFSMazeGenerator implements MazeGenerator {
       List<Integer> neighbors = graph.neighbors(current);
       Collections.shuffle(neighbors);
 
+      // Indique si un sommet à d'autres voisin à visiter
       boolean hasNeighborToVisit = false;
       for (int neighbor : neighbors) {
         // On traite le premier voisin non visité dans la liste.
@@ -57,6 +58,8 @@ public final class DFSMazeGenerator implements MazeGenerator {
           // Ajouter le voisin à la pile et le marquer en traitement
           stack.push(neighbor);
           label.setLabel(neighbor, Progression.PROCESSING);
+
+          // Tous les voisins du sommet n'ont pas été visités
           hasNeighborToVisit = true;
           break;
         }
