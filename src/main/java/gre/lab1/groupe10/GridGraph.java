@@ -57,12 +57,8 @@ public final class GridGraph implements GridGraph2D {
     if (v < 0 || v >= height * width) {
       throw new IndexOutOfBoundsException("L'index v n'éxiste pas.");
     }
-    List<Integer> neightborsValues = new ArrayList<>();
-    if (v >= width) neightborsValues.add(v - width); // Check for upper neighbor
-    if (v < width * (height - 1)) neightborsValues.add(v + width); // Check for under neighbor
-    if (v % height != 0) neightborsValues.add(v - 1); // Check for left hand sign neighbor
-    if (v % height != height - 1) neightborsValues.add(v + 1); // Check for right hand sign neighbor
-    return neightborsValues;
+
+    return adjVerticesList.get(v);
   }
 
   /**
@@ -166,8 +162,12 @@ public final class GridGraph implements GridGraph2D {
    */
   public static void bindAll(GridGraph graph) {
     for (int i = 0; i < graph.width * graph.height; ++i){
-      List<Integer> neighbors = graph.neighbors(i);
-      for (Integer neighbor : neighbors) {
+      List<Integer> neightborsValues = new ArrayList<>();
+      if (i >= graph.width) neightborsValues.add(i - graph.width); // Check for upper neighbor
+      if (i < graph.width * (graph.height - 1)) neightborsValues.add(i + graph.width); // Check for under neighbor
+      if (i % graph.height != 0) neightborsValues.add(i - 1); // Check for left hand sign neighbor
+      if (i % graph.height != graph.height - 1) neightborsValues.add(i + 1); // Check for right hand sign neighbor
+      for (Integer neighbor : neightborsValues) {
         graph.addEdge(i, neighbor);
       }
     }
